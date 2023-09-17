@@ -1,5 +1,6 @@
 import { CssBaseline, CssVarsProvider, GlobalStyles } from '@mui/joy';
 import { App } from '@src/App';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 export const AppProvider = () => {
   return (
@@ -15,7 +16,9 @@ export const AppProvider = () => {
           },
         }}
       />
-      <App />
+      <Router>
+        <App />
+      </Router>
     </CssVarsProvider>
   );
 };

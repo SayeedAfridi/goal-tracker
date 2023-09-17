@@ -1,25 +1,14 @@
 import { FC, Fragment } from 'react';
 import Box from '@mui/joy/Box';
 import Button from '@mui/joy/Button';
-import Checkbox from '@mui/joy/Checkbox';
-import FormControl from '@mui/joy/FormControl';
-import FormLabel, { formLabelClasses } from '@mui/joy/FormLabel';
-import Link from '@mui/joy/Link';
-import Input from '@mui/joy/Input';
+import { formLabelClasses } from '@mui/joy/FormLabel';
 import Typography from '@mui/joy/Typography';
 import { GoogleIcon } from '@src/assets/vectors/GoogleIcon';
 import { AppLogo } from '@src/assets/vectors/AppLogo';
 import { ColorSchemeToggle } from '@src/components';
 import WeOpen from '@src/assets/images/we_open.webp';
-
-interface FormElements extends HTMLFormControlsCollection {
-  email: HTMLInputElement;
-  password: HTMLInputElement;
-  persistent: HTMLInputElement;
-}
-interface SignInFormElement extends HTMLFormElement {
-  readonly elements: FormElements;
-}
+import { Link } from 'react-router-dom';
+import { ROUTE_NAMES } from '@src/lib/constants/routes';
 
 export const SigninFeatures: FC = () => {
   return (
@@ -61,12 +50,14 @@ export const SigninFeatures: FC = () => {
               justifyContent: 'space-between',
             }}
           >
-            <Typography
-              fontWeight='lg'
-              startDecorator={<AppLogo fontSize='xl2' />}
-            >
-              Goal Tracker
-            </Typography>
+            <Link to={ROUTE_NAMES.DASHBOARD}>
+              <Typography
+                fontWeight='lg'
+                startDecorator={<AppLogo fontSize='xl2' />}
+              >
+                Goal Tracker
+              </Typography>
+            </Link>
             <ColorSchemeToggle />
           </Box>
           <Box
@@ -100,46 +91,6 @@ export const SigninFeatures: FC = () => {
                 Welcome back
               </Typography>
             </div>
-            <form
-              onSubmit={(event: React.FormEvent<SignInFormElement>) => {
-                event.preventDefault();
-                const formElements = event.currentTarget.elements;
-                const data = {
-                  email: formElements.email.value,
-                  password: formElements.password.value,
-                  persistent: formElements.persistent.checked,
-                };
-                alert(JSON.stringify(data, null, 2));
-              }}
-            >
-              <FormControl required>
-                <FormLabel>Email</FormLabel>
-                <Input type='email' name='email' />
-              </FormControl>
-              <FormControl required>
-                <FormLabel>Password</FormLabel>
-                <Input type='password' name='password' />
-              </FormControl>
-              <Box
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                }}
-              >
-                <Checkbox
-                  size='sm'
-                  label='Remember for 30 days'
-                  name='persistent'
-                />
-                <Link fontSize='sm' href='#replace-with-a-link' fontWeight='lg'>
-                  Forgot your password?
-                </Link>
-              </Box>
-              <Button type='submit' fullWidth>
-                Sign in
-              </Button>
-            </form>
             <Button
               variant='outlined'
               color='neutral'

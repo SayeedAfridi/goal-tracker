@@ -9,9 +9,11 @@ export const ColorSchemeToggle: FC<IconButtonProps> = ({
 }) => {
   const { mode, setMode } = useColorScheme();
   const [mounted, setMounted] = useState(false);
+
   useEffect(() => {
     setMounted(true);
   }, []);
+
   if (!mounted) {
     return <IconButton size='sm' variant='plain' color='neutral' disabled />;
   }
