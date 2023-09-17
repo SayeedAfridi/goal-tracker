@@ -1,4 +1,4 @@
-import { FC, Fragment } from 'react';
+import { FC, Fragment, useEffect, useState } from 'react';
 import Box from '@mui/joy/Box';
 import Button from '@mui/joy/Button';
 import { formLabelClasses } from '@mui/joy/FormLabel';
@@ -7,10 +7,44 @@ import { GoogleIcon } from '@src/assets/vectors/GoogleIcon';
 import { AppLogo } from '@src/assets/vectors/AppLogo';
 import { ColorSchemeToggle } from '@src/components';
 import WeOpen from '@src/assets/images/we_open.webp';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ROUTE_NAMES } from '@src/lib/constants/routes';
+import { authService } from '@src/services';
+import { CircularProgress } from '@mui/joy';
 
 export const SigninFeatures: FC = () => {
+  const [loading, setLoading] = useState<boolean>(true);
+  const nav = useNavigate();
+
+  useEffect(() => {
+    const unsub = authService.auth.onAuthStateChanged((user) => {
+      if (user) {
+        nav(ROUTE_NAMES.DASHBOARD);
+      } else {
+        setLoading(false);
+      }
+    });
+    return unsub;
+  }, [nav]);
+
+  if (loading) {
+    return (
+      <Box
+        position='fixed'
+        top={0}
+        bottom={0}
+        left={0}
+        right={0}
+        display='flex'
+        flex={1}
+        justifyContent='center'
+        alignItems='center'
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
+
   return (
     <Fragment>
       <Box
@@ -96,6 +130,7 @@ export const SigninFeatures: FC = () => {
               color='neutral'
               fullWidth
               startDecorator={<GoogleIcon />}
+              onClick={authService.signinWithGoogle}
             >
               Sign in with Google
             </Button>

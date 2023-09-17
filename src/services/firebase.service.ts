@@ -1,4 +1,4 @@
-import { initializeApp, getApp } from 'firebase/app';
+import { initializeApp, FirebaseApp } from 'firebase/app';
 
 const env = import.meta.env;
 
@@ -12,18 +12,22 @@ const firebaseConfig = {
   measurementId: env.VITE_FIREBASE_MEASUREMENT_ID,
 };
 
-class FirebaseService {
-  init() {
-    initializeApp(firebaseConfig);
-  }
-  getAppInstance() {
-    let app = getApp();
+let app: FirebaseApp;
 
-    if (!app) {
-      app = initializeApp(firebaseConfig);
-    }
-    return app;
+const init = () => {
+  if (!app) {
+    app = initializeApp(firebaseConfig);
   }
-}
+};
 
-export const firebaseService = new FirebaseService();
+const getAppInstance = () => {
+  if (!app) {
+    init();
+  }
+  return app;
+};
+
+export const firebaseService = {
+  init,
+  getAppInstance,
+};
