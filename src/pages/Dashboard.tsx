@@ -1,12 +1,10 @@
-import { Box, Button, Typography } from '@mui/joy';
-import { authService } from '@src/services';
+import { Box, Typography } from '@mui/joy';
 import { FC } from 'react';
 
 export const Dashboard: FC = () => {
   return (
-    <Box>
+    <Box px={4}>
       <Typography>Dashboard</Typography>
-      <Button onClick={authService.signOut}>Signout</Button>
     </Box>
   );
 };

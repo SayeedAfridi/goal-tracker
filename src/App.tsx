@@ -4,6 +4,7 @@ import { Routes, Route, useNavigate } from 'react-router-dom';
 import { ROUTE_NAMES } from '@src/lib/constants/routes';
 import { authService } from '@src/services';
 import { Box, CircularProgress } from '@mui/joy';
+import { PageWrapper } from '@src/components';
 
 export const App: FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
@@ -38,9 +39,11 @@ export const App: FC = () => {
   }
 
   return (
-    <Routes>
-      <Route path={ROUTE_NAMES.DASHBOARD} element={<Dashboard />} />
-      <Route path={ROUTE_NAMES.SIGNIN} element={<Signin />} />
-    </Routes>
+    <PageWrapper>
+      <Routes>
+        <Route path={ROUTE_NAMES.DASHBOARD} element={<Dashboard />} />
+        <Route path={ROUTE_NAMES.SIGNIN} element={<Signin />} />
+      </Routes>
+    </PageWrapper>
   );
 };
